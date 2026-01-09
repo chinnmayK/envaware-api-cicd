@@ -2,11 +2,25 @@
 set -e
 
 echo "===== BEFORE INSTALL ====="
+echo "User: $(whoami)"
+echo "PWD: $(pwd)"
 
-# Stop any running app
-pkill -f "node src/index.js" || true
+# Ensure target directory exists
+if [ ! -d /opt/envaware ]; then
+  echo "Creating /opt/envaware"
+  mkdir -p /opt/envaware
+fi
 
-# Clean old files
-rm -rf /opt/envaware/*
+# Stop existing Node app safely
+if pgrep -f "node" > /dev/null; then
+  echo "Stopping existing Node process"
+  pkill -f "node" || true
+else
+  echo "No running Node process found"
+fi
 
-echo "Cleaned previous deployment"
+# Clean old files safely
+echo "Cleaning old deployment files"
+rm -rf /opt/envaware/* || true
+
+echo "BeforeInstall completed successfully"
