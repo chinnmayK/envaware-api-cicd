@@ -2,13 +2,25 @@
 set -e
 
 echo "===== AFTER INSTALL ====="
+echo "Current user: $(whoami)"
+echo "Current directory: $(pwd)"
+
+# Ensure Node & npm are available
+export PATH=$PATH:/usr/bin:/usr/local/bin
 
 cd /opt/envaware
 
-# Install dependencies
+echo "Node version:"
+node -v
+
+echo "NPM version:"
+npm -v
+
+echo "Installing dependencies..."
 npm install --production
 
-# Create runtime env file
+echo "Creating environment variables file..."
+
 cat <<EOF > .env
 APP_NAME=EnvAware API
 APP_ENV=production
@@ -17,4 +29,4 @@ DEPLOY_TIME=$(date)
 PORT=3000
 EOF
 
-echo "Environment variables written"
+echo "AfterInstall completed successfully"
