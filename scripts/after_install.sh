@@ -2,13 +2,17 @@
 set -e
 
 echo "===== AFTER INSTALL ====="
-echo "Current user: $(whoami)"
-echo "Current directory: $(pwd)"
+echo "User: $(whoami)"
+echo "PWD: $(pwd)"
 
-# Ensure Node & npm are available
-export PATH=$PATH:/usr/bin:/usr/local/bin
+# Ensure correct ownership
+echo "Fixing ownership of /opt/envaware"
+sudo chown -R ec2-user:ec2-user /opt/envaware
 
 cd /opt/envaware
+
+# Ensure Node & npm path
+export PATH=$PATH:/usr/bin:/usr/local/bin
 
 echo "Node version:"
 node -v
@@ -17,9 +21,9 @@ echo "NPM version:"
 npm -v
 
 echo "Installing dependencies..."
-npm install --production
+npm install --omit=dev
 
-echo "Creating environment variables file..."
+echo "Writing environment variables..."
 
 cat <<EOF > .env
 APP_NAME=EnvAware API
