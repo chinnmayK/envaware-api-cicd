@@ -28,7 +28,7 @@ echo "Writing environment variables..."
 cat <<EOF > .env
 APP_NAME=EnvAware API
 APP_ENV=production
-APP_VERSION=1.0.0
+APP_VERSION=1.0.1
 DEPLOY_TIME=$(date)
 PORT=3000
 EOF
